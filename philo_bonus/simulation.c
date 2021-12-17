@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 02:05:57 by cjeon             #+#    #+#             */
-/*   Updated: 2021/12/18 01:59:53 by cjeon            ###   ########.fr       */
+/*   Updated: 2021/12/18 02:02:51 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static void	set_philo_arg(unsigned int id, t_philo_arg *philo_arg)
 	philo_arg->n_eat = 0;
 }
 
-static int	wait_end(t_shared_arg *shared_arg, pid_t *pids, unsigned int n_philos)
+static int	wait_end(t_shared_arg *shared_arg, pid_t *pids, \
+						unsigned int n_philos)
 {
 	int				status;
 	int				result;
