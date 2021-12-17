@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cjeon <student.42seoul.kr>                 +#+  +:+       +#+        */
+/*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 01:51:39 by cjeon             #+#    #+#             */
-/*   Updated: 2021/12/17 14:51:07 by cjeon            ###   ########.fr       */
+/*   Updated: 2021/12/18 01:23:43 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,27 @@ size_t	ft_strlen(const char *s)
 	while (s[len])
 		len++;
 	return (len);
+}
+
+void	set_sem_name(char *s, unsigned int id)
+{
+	static const char	*base_name = "/ft_philo";
+	unsigned int		i;
+
+	i = 0;
+	while (base_name[i])
+	{
+		s[i] = base_name[i];
+		i++;
+	}
+	s[i++] = (id % 10) + '0';
+	id /= 10;
+	while (id)
+	{
+		s[i++] = (id % 10) + '0';
+		id /= 10;
+	}
+	s[i] = '\0';
 }
 
 t_timestamp	get_timestamp_in_ms(void)

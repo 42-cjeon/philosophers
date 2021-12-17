@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cjeon <student.42seoul.kr>                 +#+  +:+       +#+        */
+/*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 01:51:42 by cjeon             #+#    #+#             */
-/*   Updated: 2021/12/17 15:04:45 by cjeon            ###   ########.fr       */
+/*   Updated: 2021/12/18 01:22:56 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,27 +60,6 @@ int	is_philo_dead(t_shared_arg *shared_arg, t_main_arg *main_arg, \
 	return (is_dead);
 }
 
-void set_sem_name(char *s, unsigned int id)
-{
-	static const char *base_name = "/ft_philo";
-	unsigned int i;
-
-	i = 0;
-	while (base_name[i])
-	{
-		s[i] = base_name[i];
-		i++;
-	}
-	s[i++] = (id % 10) + '0';
-	id /= 10;
-	while (id)
-	{
-		s[i++] = (id % 10) + '0';
-		id /= 10;
-	}
-	s[i] = '\0';
-}
-
 int	philo_start(t_shared_arg *shared_arg, t_main_arg *main_arg, \
 					t_philo_arg *philo_arg)
 {
@@ -92,7 +71,8 @@ int	philo_start(t_shared_arg *shared_arg, t_main_arg *main_arg, \
 	if (open_semaphore(sem_name, 1, &event_lock))
 		return (1);
 	philo_arg->event_lock = event_lock;
-	if (pthread_create(&self_dead_observer, NULL, self_dead_start, &(t_self_dead_arg){shared_arg, main_arg, philo_arg}))
+	if (pthread_create(&self_dead_observer, NULL, self_dead_start, \
+				&(t_self_dead_arg){shared_arg, main_arg, philo_arg}))
 		return (1);
 	while (42)
 	{

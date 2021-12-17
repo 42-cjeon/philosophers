@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   observer_routine.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cjeon <student.42seoul.kr>                 +#+  +:+       +#+        */
+/*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 02:09:39 by cjeon             #+#    #+#             */
-/*   Updated: 2021/12/17 15:53:45 by cjeon            ###   ########.fr       */
+/*   Updated: 2021/12/18 01:24:24 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "philo.h"
-
 
 void	*everyone_full_start(void *_arg)
 {
@@ -36,7 +35,7 @@ void	*everyone_full_start(void *_arg)
 
 void	*self_dead_start(void *_arg)
 {
-	t_self_dead_arg *arg;
+	t_self_dead_arg	*arg;
 
 	arg = (t_self_dead_arg *)_arg;
 	while (42)

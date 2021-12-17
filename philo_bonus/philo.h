@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cjeon <student.42seoul.kr>                 +#+  +:+       +#+        */
+/*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 02:27:24 by cjeon             #+#    #+#             */
-/*   Updated: 2021/12/17 19:57:40 by cjeon            ###   ########.fr       */
+/*   Updated: 2021/12/18 01:23:53 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ void		syncronized_log(t_shared_arg *shared_arg, t_philo_arg *philo_arg, \
 								const char *msg);
 void		smart_sleep(unsigned long long t);
 size_t		ft_strlen(const char *s);
+void		set_sem_name(char *s, unsigned int id);
 
 #endif

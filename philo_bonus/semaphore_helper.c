@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   semaphore_helper.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cjeon <student.42seoul.kr>                 +#+  +:+       +#+        */
+/*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 02:03:02 by cjeon             #+#    #+#             */
-/*   Updated: 2021/12/17 19:58:01 by cjeon            ###   ########.fr       */
+/*   Updated: 2021/12/18 01:21:23 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,14 @@ static void	unlink_semaphore(void)
 	sem_unlink("/ft_full_philos");
 }
 
+static void	close_semaphore(t_shared_arg *shared_arg)
+{
+	sem_close(shared_arg->forks);
+	sem_close(shared_arg->forks_lock);
+	sem_close(shared_arg->full_philos);
+	sem_close(shared_arg->is_end_lock);
+}
+
 int	open_semaphore(const char *name, unsigned int value, sem_t **target)
 {
 	sem_t	*sem;
@@ -34,13 +42,6 @@ int	open_semaphore(const char *name, unsigned int value, sem_t **target)
 	return (0);
 }
 
-void close_semaphore(t_shared_arg *shared_arg)
-{
-	sem_close(shared_arg->forks);
-	sem_close(shared_arg->forks_lock);
-	sem_close(shared_arg->full_philos);
-	sem_close(shared_arg->is_end_lock);
-}
 void	destroy_semaphore(t_shared_arg *shared_arg)
 {
 	close_semaphore(shared_arg);
