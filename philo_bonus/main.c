@@ -6,7 +6,7 @@
 /*   By: cjeon <student.42seoul.kr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 18:26:46 by cjeon             #+#    #+#             */
-/*   Updated: 2021/12/16 18:55:12 by cjeon            ###   ########.fr       */
+/*   Updated: 2021/12/17 19:57:49 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ int	main(int argc, const char **argv)
 		return (exit_with(SEMAPHORE_FAIL));
 	if (run_simulation(&shared_arg, &main_arg, &philo_arg))
 		result = RUNTIME_FAIL;
-	destroy_semaphore();
+	destroy_semaphore(&shared_arg);
 	return (exit_with(result));
 }

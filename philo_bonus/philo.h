@@ -6,7 +6,7 @@
 /*   By: cjeon <student.42seoul.kr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 02:27:24 by cjeon             #+#    #+#             */
-/*   Updated: 2021/12/17 15:03:06 by cjeon            ###   ########.fr       */
+/*   Updated: 2021/12/17 19:57:40 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int			philo_start(t_shared_arg *shared_arg, t_main_arg *main_arg, \
 							t_philo_arg *philo_arg);
 int			is_philo_dead(t_shared_arg *shared_arg, t_main_arg *main_arg, \
 							t_philo_arg *philo_arg);
-void		destroy_semaphore(void);
+void		destroy_semaphore(t_shared_arg *shared_arg);
 int			open_semaphore(const char *name, unsigned int value, \
 								sem_t **target);
 int			init_semaphore(t_shared_arg *shared_arg, unsigned int n_philos);
