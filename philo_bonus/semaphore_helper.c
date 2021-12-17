@@ -6,7 +6,7 @@
 /*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 02:03:02 by cjeon             #+#    #+#             */
-/*   Updated: 2021/12/18 01:21:23 by cjeon            ###   ########.fr       */
+/*   Updated: 2021/12/18 02:00:26 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static void	close_semaphore(t_shared_arg *shared_arg)
 {
 	sem_close(shared_arg->forks);
 	sem_close(shared_arg->forks_lock);
-	sem_close(shared_arg->full_philos);
 	sem_close(shared_arg->is_end_lock);
+	sem_close(shared_arg->full_philos);
 }
 
 int	open_semaphore(const char *name, unsigned int value, sem_t **target)

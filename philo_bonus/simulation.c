@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cjeon <student.42seoul.kr>                 +#+  +:+       +#+        */
+/*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 02:05:57 by cjeon             #+#    #+#             */
-/*   Updated: 2021/12/17 15:55:07 by cjeon            ###   ########.fr       */
+/*   Updated: 2021/12/18 01:59:53 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	set_philo_arg(unsigned int id, t_philo_arg *philo_arg)
 	philo_arg->n_eat = 0;
 }
 
-static int	wait_end(pid_t *pids, unsigned int n_philos)
+static int	wait_end(t_shared_arg *shared_arg, pid_t *pids, unsigned int n_philos)
 {
 	int				status;
 	int				result;
@@ -43,6 +43,10 @@ static int	wait_end(pid_t *pids, unsigned int n_philos)
 			waitpid(pids[i], &status, 0);
 		i++;
 	}
+	i = n_philos;
+	while (i--)
+		sem_post(shared_arg->full_philos);
+	sem_post(shared_arg->is_end_lock);
 	return (result);
 }
 
@@ -87,6 +91,6 @@ int	run_simulation(t_shared_arg *shared_arg, t_main_arg *main_arg, \
 		if (run_observer(&(t_observer_arg){main_arg->n_philos, pids[0], \
 			shared_arg->full_philos, shared_arg->is_end_lock}))
 			return (free_and_return(pids, 1));
-	result = wait_end(pids, main_arg->n_philos);
+	result = wait_end(shared_arg, pids, main_arg->n_philos);
 	return (free_and_return(pids, result));
 }
