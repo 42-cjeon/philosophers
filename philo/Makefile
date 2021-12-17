@@ -8,11 +8,11 @@ SRCS = main.c mutex_helper.c observer_routine.c parser.c utils.c \
 		simulation.c 
 OBJS = $(SRCS:.c=.o)
 
-%.o : %.c philo.h
-	$(CC) $(CFLAGS) -c $< 
-
 $(NAME) : $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
+
+%.o : %.c philo.h
+	$(CC) $(CFLAGS) -c $< 
 
 all : $(NAME)
 
