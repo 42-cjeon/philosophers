@@ -6,10 +6,11 @@
 /*   By: cjeon <student.42seoul.kr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 01:51:42 by cjeon             #+#    #+#             */
-/*   Updated: 2021/12/16 19:01:34 by cjeon            ###   ########.fr       */
+/*   Updated: 2021/12/17 13:30:53 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include <pthread.h>
 #include "philo.h"
 
@@ -38,6 +39,7 @@ static int	philo_sleep(t_philo_arg *arg)
 static int	philo_think(t_philo_arg *arg)
 {
 	syncronized_log(arg, "is thinking");
+	usleep(EPSILON);
 	return (is_simulation_end(arg));
 }
 
