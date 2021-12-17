@@ -6,7 +6,7 @@
 /*   By: cjeon <student.42seoul.kr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 02:27:24 by cjeon             #+#    #+#             */
-/*   Updated: 2021/12/16 18:53:20 by cjeon            ###   ########.fr       */
+/*   Updated: 2021/12/17 15:03:06 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_philo_arg
 	unsigned int	n_eat;
 	t_timestamp		last_eat;
 	t_timestamp		started_at;
+	sem_t			*event_lock;
 }							t_philo_arg;
 typedef struct s_main_arg
 {
@@ -48,7 +49,12 @@ typedef struct s_observer_arg
 	sem_t			*full_philos;
 	sem_t			*is_end_lock;
 }							t_observer_arg;
-
+typedef struct s_self_dead_arg
+{
+	t_shared_arg	*shared_arg;
+	t_main_arg		*main_arg;
+	t_philo_arg		*philo_arg;
+}							t_self_dead_arg;
 enum e_exit_status
 {
 	SUCCESS,
@@ -58,6 +64,7 @@ enum e_exit_status
 };
 
 void		*everyone_full_start(void *_arg);
+void		*self_dead_start(void *_arg);
 int			parse_input(int argc, const char **argv, t_main_arg *main_arg);
 void		philo_release_forks(t_shared_arg *shared_arg);
 void		philo_take_forks(t_shared_arg *shared_arg, t_philo_arg *philo_arg);
@@ -66,14 +73,15 @@ int			philo_start(t_shared_arg *shared_arg, t_main_arg *main_arg, \
 int			is_philo_dead(t_shared_arg *shared_arg, t_main_arg *main_arg, \
 							t_philo_arg *philo_arg);
 void		destroy_semaphore(void);
+int			open_semaphore(const char *name, unsigned int value, \
+								sem_t **target);
 int			init_semaphore(t_shared_arg *shared_arg, unsigned int n_philos);
 int			run_simulation(t_shared_arg *shared_arg, t_main_arg *main_arg, \
 								t_philo_arg *philo_arg);
 t_timestamp	get_timestamp_in_ms(void);
 void		syncronized_log(t_shared_arg *shared_arg, t_philo_arg *philo_arg, \
 								const char *msg);
-int			smart_sleep(t_shared_arg *shared_arg, t_main_arg *main_arg, \
-							t_philo_arg *philo_arg, unsigned long long t);
+void		smart_sleep(unsigned long long t);
 size_t		ft_strlen(const char *s);
 
 #endif

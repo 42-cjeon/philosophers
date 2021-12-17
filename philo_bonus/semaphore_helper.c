@@ -6,7 +6,7 @@
 /*   By: cjeon <student.42seoul.kr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 02:03:02 by cjeon             #+#    #+#             */
-/*   Updated: 2021/12/16 18:53:47 by cjeon            ###   ########.fr       */
+/*   Updated: 2021/12/17 13:57:15 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	unlink_semaphore(void)
 	sem_unlink("/ft_full_philos");
 }
 
-static int	open_semaphore(const char *name, unsigned int value, sem_t **target)
+int	open_semaphore(const char *name, unsigned int value, sem_t **target)
 {
 	sem_t	*sem;
 

@@ -6,7 +6,7 @@
 /*   By: cjeon <student.42seoul.kr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 01:51:39 by cjeon             #+#    #+#             */
-/*   Updated: 2021/12/16 18:04:23 by cjeon            ###   ########.fr       */
+/*   Updated: 2021/12/17 14:51:07 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,11 @@ void	syncronized_log(t_shared_arg *shared_arg, t_philo_arg *philo_arg, \
 	sem_post(shared_arg->is_end_lock);
 }
 
-int	smart_sleep(t_shared_arg *shared_arg, t_main_arg *main_arg, \
-					t_philo_arg *philo_arg, unsigned long long t)
+void	smart_sleep(unsigned long long t)
 {
 	t_timestamp	sleep_start;
-	t_timestamp	now;
 
 	sleep_start = get_timestamp_in_ms();
-	now = sleep_start;
-	while (now - sleep_start <= t)
-	{
-		if (is_philo_dead(shared_arg, main_arg, philo_arg))
-			return (1);
+	while (get_timestamp_in_ms() - sleep_start <= t)
 		usleep(EPSILON);
-		now = get_timestamp_in_ms();
-	}
-	return (0);
 }
