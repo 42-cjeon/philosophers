@@ -6,7 +6,7 @@
 /*   By: cjeon <student.42seoul.kr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 01:51:42 by cjeon             #+#    #+#             */
-/*   Updated: 2021/12/17 14:44:38 by cjeon            ###   ########.fr       */
+/*   Updated: 2021/12/18 15:25:55 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	*philo_start(void *_arg)
 	t_philo_arg	*arg;
 
 	arg = (t_philo_arg *)_arg;
+	if (arg->id % 2 == 0)
+		usleep(EPSILON);
 	while (42)
 	{
 		if (philo_eat(arg))
