@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: cjeon <student.42seoul.kr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 02:05:57 by cjeon             #+#    #+#             */
-/*   Updated: 2021/12/18 02:02:51 by cjeon            ###   ########.fr       */
+/*   Updated: 2021/12/18 15:29:54 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static void	set_philo_arg(unsigned int id, t_philo_arg *philo_arg)
 	philo_arg->n_eat = 0;
 }
 
-static int	wait_end(t_shared_arg *shared_arg, pid_t *pids, \
-						unsigned int n_philos)
+static int	wait_end(pthread_t observer, t_shared_arg *shared_arg, \
+						pid_t *pids, unsigned int n_philos)
 {
 	int				status;
 	int				result;
@@ -47,7 +47,7 @@ static int	wait_end(t_shared_arg *shared_arg, pid_t *pids, \
 	i = n_philos;
 	while (i--)
 		sem_post(shared_arg->full_philos);
-	sem_post(shared_arg->is_end_lock);
+	pthread_join(observer, NULL);
 	return (result);
 }
 
@@ -57,28 +57,27 @@ static int	free_and_return(pid_t *pids, int value)
 	return (value);
 }
 
-static int	run_observer(t_observer_arg *observer_arg)
+static int	run_observer(t_observer_arg *observer_arg, pthread_t *observer)
 {
-	pthread_t	observer;
-
-	if (pthread_create(&observer, NULL, everyone_full_start, observer_arg))
+	if (pthread_create(observer, NULL, everyone_full_start, observer_arg))
 		return (1);
-	pthread_detach(observer);
 	return (0);
 }
 
 int	run_simulation(t_shared_arg *shared_arg, t_main_arg *main_arg, \
 					t_philo_arg *philo_arg)
 {
-	unsigned int	i;
+	int				i;
 	pid_t			*pids;
 	int				result;
+	pthread_t		observer;
 
+	observer = NULL;
 	pids = (pid_t *)malloc(sizeof(pid_t) * main_arg->n_philos);
 	if (pids == NULL)
 		return (1);
-	i = 0;
-	while (i < main_arg->n_philos)
+	i = -1;
+	while (++i < main_arg->n_philos)
 	{
 		set_philo_arg(i + 1, philo_arg);
 		pids[i] = fork();
@@ -86,12 +85,11 @@ int	run_simulation(t_shared_arg *shared_arg, t_main_arg *main_arg, \
 			return (free_and_return(pids, 1));
 		else if (pids[i] == 0)
 			exit(philo_start(shared_arg, main_arg, philo_arg));
-		i++;
 	}
 	if (main_arg->option_arg)
 		if (run_observer(&(t_observer_arg){main_arg->n_philos, pids[0], \
-			shared_arg->full_philos, shared_arg->is_end_lock}))
+			shared_arg->full_philos, shared_arg->is_end_lock}, &observer))
 			return (free_and_return(pids, 1));
-	result = wait_end(shared_arg, pids, main_arg->n_philos);
+	result = wait_end(observer, shared_arg, pids, main_arg->n_philos);
 	return (free_and_return(pids, result));
 }

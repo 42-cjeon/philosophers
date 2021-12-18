@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   observer_routine.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cjeon <cjeon@student.42seoul.kr>           +#+  +:+       +#+        */
+/*   By: cjeon <student.42seoul.kr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 02:09:39 by cjeon             #+#    #+#             */
-/*   Updated: 2021/12/18 01:40:22 by cjeon            ###   ########.fr       */
+/*   Updated: 2021/12/18 15:17:37 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	*everyone_full_start(void *_arg)
 		sem_wait(arg->full_philos);
 		i++;
 	}
-	sem_wait(arg->is_end_lock);
 	kill(arg->last_philo, SIGTERM);
 	return (NULL);
 }
@@ -43,8 +42,8 @@ void	*self_dead_start(void *_arg)
 		sem_wait(arg->philo_arg->event_lock);
 		if (is_philo_dead(arg->shared_arg, arg->main_arg, arg->philo_arg))
 			exit(0);
-		usleep(EPSILON);
 		sem_post(arg->philo_arg->event_lock);
+		usleep(EPSILON);
 	}
 	return (NULL);
 }
