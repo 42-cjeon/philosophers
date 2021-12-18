@@ -6,7 +6,7 @@
 /*   By: cjeon <student.42seoul.kr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 02:05:57 by cjeon             #+#    #+#             */
-/*   Updated: 2021/12/18 15:29:54 by cjeon            ###   ########.fr       */
+/*   Updated: 2021/12/18 15:32:05 by cjeon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	run_observer(t_observer_arg *observer_arg, pthread_t *observer)
 int	run_simulation(t_shared_arg *shared_arg, t_main_arg *main_arg, \
 					t_philo_arg *philo_arg)
 {
-	int				i;
+	unsigned int	i;
 	pid_t			*pids;
 	int				result;
 	pthread_t		observer;
@@ -76,14 +76,14 @@ int	run_simulation(t_shared_arg *shared_arg, t_main_arg *main_arg, \
 	pids = (pid_t *)malloc(sizeof(pid_t) * main_arg->n_philos);
 	if (pids == NULL)
 		return (1);
-	i = -1;
-	while (++i < main_arg->n_philos)
+	i = 0;
+	while (i < main_arg->n_philos)
 	{
 		set_philo_arg(i + 1, philo_arg);
 		pids[i] = fork();
 		if (pids[i] < 0)
 			return (free_and_return(pids, 1));
-		else if (pids[i] == 0)
+		else if (pids[i++] == 0)
 			exit(philo_start(shared_arg, main_arg, philo_arg));
 	}
 	if (main_arg->option_arg)
